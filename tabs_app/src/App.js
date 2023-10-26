@@ -1,7 +1,8 @@
-import "./App.css";
+// import "./App.css";
 import { useEffect, useState } from "react";
 import Tabs from "./components/tabs";
 import request from "./components/utils/request";
+// import { Router } from "react-router-dom";
 
 export const App = ({ routes }) => {
   const [tabs, setTabs] = useState([]);
@@ -20,7 +21,8 @@ export const App = ({ routes }) => {
 
   return (
     <div className="App">
-      <header className="App-header"></header>
+      {/* <header className="App-header"></header> */}
+
       <Tabs tabs={tabs} />
     </div>
   );
