@@ -2,7 +2,7 @@
   "name": "tabs_app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://BabiychukYuliya.github.io/tabs_test",
+  "homepage": "https://BabiychukYuliya.github.io/tabs_test/tabs_app",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
