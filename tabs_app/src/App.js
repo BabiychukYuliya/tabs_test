@@ -3,10 +3,9 @@ import { useEffect, useState } from "react";
 import Tabs from "./components/tabs";
 import request from "./components/utils/request";
 
-import { Routes, Route, Outlet } from "react-router-dom";
-import { Suspense } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+
 import { lazy } from "react";
-const HOME_URL = "/";
 
 export const App = ({ routes }) => {
   const [tabs, setTabs] = useState([]);
@@ -23,41 +22,34 @@ export const App = ({ routes }) => {
     fetchTabs();
   }, []);
 
-  // const RouteTab = ({ tabs }) => {
-  //   <Routes>
-  //     {tabs.map(({ id, path }, key) => (
-  //       <Route
-  //         key={id}
-  //         path={key ? `${HOME_URL}${id}` : [`${HOME_URL}${id}`, `${HOME_URL}`]}
-  //         element={lazy(() => import(`./components/${path}`))}
-  //       />
-  //     ))}
-  //   </Routes>;
-  //   <Suspense fallback={null}>
-  //     <Outlet />
-  //   </Suspense>;
-  // };
+  const uniqueKey = () => {
+    const randomKey = Math.floor(Math.random() * 25);
+    return randomKey;
+  };
+
+  const sortedOrder = tabs.sort((a, b) => a.order - b.order);
 
   return (
     <div className="App">
-      {/* <header className="App-header"></header> */}
-      <Tabs tabs={tabs} />
-      {/* <RouteTab /> */}
       <Routes>
-        {tabs.map(({ id, path }, key) => (
-          <Route
-            key={id}
-            path={
-              key ? `${HOME_URL}${id}` : [`${HOME_URL}${id}`, `${HOME_URL}`]
+        <Route key={uniqueKey()} path="/" element={<Tabs tabs={sortedOrder} />}>
+          {sortedOrder.map((tab, element) => {
+            const DummyTab = lazy(() => import(`./${tab}.path}`));
+
+            if (element === 0) {
+              <>
+                <Route
+                  key={uniqueKey()}
+                  index
+                  element={<Navigate to={tab.id} />}
+                />
+                <Route key={uniqueKey()} path={tab.id} element={DummyTab} />
+              </>;
             }
-            element={lazy(() => import(`./components/${path}`))}
-          />
-        ))}
+            return <Route path={tab.id} element={<DummyTab />} />;
+          })}
+        </Route>
       </Routes>
-      <Suspense fallback={null}>
-        <Outlet />
-      </Suspense>
-      ;
     </div>
   );
 };

@@ -1,25 +1,26 @@
 import { NavLink } from "react-router-dom";
+import { Suspense } from "react";
+import { Outlet } from "react-router-dom";
 
-const HOME_URL = "/";
-const isActiveTab = (id, key, path) =>
-  path === `${HOME_URL}${id}` || (path === `${HOME_URL}` && !key);
+const uniqueKey = () => {
+  const randomKey = Math.floor(Math.random() * 25);
+  return randomKey;
+};
 
-const Tabs = ({ tabs, path }) => {
+export const Tabs = ({ tabs }) => {
   return (
-    <nav>
-      <ul>
-        {tabs.map(({ id, title }, key) => (
-          <li key={id}>
-            <NavLink
-              isActive={isActiveTab(id, key, path)}
-              to={`${HOME_URL}${id}`}
-            >
-              {title}
-            </NavLink>
-          </li>
+    <>
+      <nav>
+        {tabs.map((tab) => (
+          <NavLink key={uniqueKey()} to={tab.id}>
+            {tab.title}
+          </NavLink>
         ))}
-      </ul>
-    </nav>
+      </nav>
+      <Suspense fallback={null}>
+        <Outlet />
+      </Suspense>
+    </>
   );
 };
 
