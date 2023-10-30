@@ -23,24 +23,41 @@ export const App = ({ routes }) => {
     fetchTabs();
   }, []);
 
-  const RouteTab = (tabs) => {
-    <Routes>
-      {tabs.map(({ id, path }, key) => (
-        <Route
-          key={id}
-          path={key ? `${HOME_URL}${id}` : [`${HOME_URL}${id}`, `${HOME_URL}`]}
-          element={lazy(() => import(`./components/${path}`))}
-        />
-      ))}
-    </Routes>;
-    <Suspense fallback={null}>
-      <Outlet />
-    </Suspense>;
-  };
+  // const RouteTab = ({ tabs }) => {
+  //   <Routes>
+  //     {tabs.map(({ id, path }, key) => (
+  //       <Route
+  //         key={id}
+  //         path={key ? `${HOME_URL}${id}` : [`${HOME_URL}${id}`, `${HOME_URL}`]}
+  //         element={lazy(() => import(`./components/${path}`))}
+  //       />
+  //     ))}
+  //   </Routes>;
+  //   <Suspense fallback={null}>
+  //     <Outlet />
+  //   </Suspense>;
+  // };
+
   return (
     <div className="App">
       {/* <header className="App-header"></header> */}
       <Tabs tabs={tabs} />
+      {/* <RouteTab /> */}
+      <Routes>
+        {tabs.map(({ id, path }, key) => (
+          <Route
+            key={id}
+            path={
+              key ? `${HOME_URL}${id}` : [`${HOME_URL}${id}`, `${HOME_URL}`]
+            }
+            element={lazy(() => import(`./components/${path}`))}
+          />
+        ))}
+      </Routes>
+      <Suspense fallback={null}>
+        <Outlet />
+      </Suspense>
+      ;
     </div>
   );
 };
