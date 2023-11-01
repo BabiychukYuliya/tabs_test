@@ -3,12 +3,12 @@ import React from "react";
 const DummyList = () => {
   return (
     <main>
-      <table>
-        <tr>
-          <td>Dummy</td>
-          <td>List</td>
-        </tr>
-      </table>
+      <ul>
+        Dummy List
+        <li>First</li>
+        <li>Second</li>
+        <li>Third</li>
+      </ul>
     </main>
   );
 };

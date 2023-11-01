@@ -1,14 +1,10 @@
 import React from "react";
+import { Chart } from "./dummy.styled";
 
 const DummyChart = () => {
   return (
     <main>
-      <table>
-        <tr>
-          <td>Dummy</td>
-          <td>Chart</td>
-        </tr>
-      </table>
+      <Chart>Dummy Chart</Chart>
     </main>
   );
 };

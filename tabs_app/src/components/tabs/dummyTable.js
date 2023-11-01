@@ -1,14 +1,29 @@
 import React from "react";
+import { Table } from "./dummy.styled";
+import { Cell } from "./dummy.styled";
 
 const DummyTable = () => {
   return (
     <main>
-      <table>
-        <tr>
-          <td>Dummy</td>
-          <td>Table</td>
-        </tr>
-      </table>
+      <Table>
+        <tbody>
+          <tr>
+            <Cell>Dummy</Cell>
+            <Cell>Table</Cell>
+            <Cell>First</Cell>
+          </tr>
+          <tr>
+            <Cell>Dummy</Cell>
+            <Cell>Table</Cell>
+            <Cell>Second</Cell>
+          </tr>
+          <tr>
+            <Cell>Dummy</Cell>
+            <Cell>Table</Cell>
+            <Cell>Third</Cell>
+          </tr>
+        </tbody>
+      </Table>
     </main>
   );
 };
