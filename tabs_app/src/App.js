@@ -2,12 +2,13 @@
 import { useEffect, useState } from "react";
 import Tabs from "./components/tabs";
 import request from "./components/utils/request";
+import React from "react";
 
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import { lazy } from "react";
 
-export const App = ({ routes }) => {
+export const App = () => {
   const [tabs, setTabs] = useState([]);
 
   const fetchTabs = async () => {
@@ -22,32 +23,25 @@ export const App = ({ routes }) => {
     fetchTabs();
   }, []);
 
-  const uniqueKey = () => {
-    const randomKey = Math.floor(Math.random() * 25);
-    return randomKey;
-  };
-
   const sortedOrder = tabs.sort((a, b) => a.order - b.order);
 
   return (
     <div className="App">
       <Routes>
-        <Route key={uniqueKey()} path="/" element={<Tabs tabs={sortedOrder} />}>
-          {sortedOrder.map((tab, element) => {
-            const DummyTab = lazy(() => import(`./${tab}.path}`));
-
-            if (element === 0) {
-              <>
-                <Route
-                  key={uniqueKey()}
-                  index
-                  element={<Navigate to={tab.id} />}
-                />
-                <Route key={uniqueKey()} path={tab.id} element={DummyTab} />
-              </>;
+        <Route path="/" element={<Tabs tabs={sortedOrder} />}>
+          {sortedOrder.map((tab, i) => {
+            const Page = lazy(() => import(`./components/${tab.path}`));
+            if (i === 0) {
+              return (
+                <React.Fragment key={i}>
+                  <Route index element={<Navigate to={tab.id} />} />
+                  <Route path={tab.id} element={<Page />} />
+                </React.Fragment>
+              );
             }
-            return <Route path={tab.id} element={<DummyTab />} />;
+            return <Route key={i} path={tab.id} element={<Page />} />;
           })}
+          <Route path="*" element={<div>Not Found</div>} />
         </Route>
       </Routes>
     </div>

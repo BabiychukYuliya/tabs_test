@@ -1,12 +1,16 @@
 import React from "react";
 
-const DummyChart = () => (
-  <table>
-    <tr>
-      <td>Dummy,,,,,</td>
-      <td>Chartkkkkkk</td>
-    </tr>
-  </table>
-);
+const DummyChart = () => {
+  return (
+    <main>
+      <table>
+        <tr>
+          <td>Dummy</td>
+          <td>Chart</td>
+        </tr>
+      </table>
+    </main>
+  );
+};
 
 export default DummyChart;

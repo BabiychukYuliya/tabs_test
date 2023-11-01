@@ -1,12 +1,16 @@
 import React from "react";
 
-const DummyTable = () => (
-  <table>
-    <tr>
-      <td>Dummy</td>
-      <td>Table</td>
-    </tr>
-  </table>
-);
+const DummyTable = () => {
+  return (
+    <main>
+      <table>
+        <tr>
+          <td>Dummy</td>
+          <td>Table</td>
+        </tr>
+      </table>
+    </main>
+  );
+};
 
 export default DummyTable;

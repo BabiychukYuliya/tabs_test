@@ -18,7 +18,9 @@ export const Tabs = ({ tabs }) => {
         ))}
       </nav>
       <Suspense fallback={null}>
-        <Outlet />
+        <main>
+          <Outlet />
+        </main>
       </Suspense>
     </>
   );
