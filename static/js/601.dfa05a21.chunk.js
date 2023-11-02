@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunktabs_app=self.webpackChunktabs_app||[]).push([[601],{601:function(t,a,e){e.r(a);var n=e(791),c=e(184);a.default=function(){return(0,n.useEffect)((function(){var t=document.querySelector("canvas"),a=t.getContext("2d"),e=[30,50,80,120],n=t.height-50,c=Math.max.apply(Math,e);a.fillStyle="#007bff",e.forEach((function(e,f){var h=e/c*(t.height-100),i=50+70*f,s=n-h;a.fillRect(i,s,50,h)}))}),[]),(0,c.jsx)("main",{children:(0,c.jsx)("canvas",{id:"myCanvas",width:300,height:200})})}}}]);
+//# sourceMappingURL=601.dfa05a21.chunk.js.map
