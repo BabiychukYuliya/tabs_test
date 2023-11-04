@@ -17,3 +17,14 @@ export const Table = styled.table`
 export const Cell = styled.td`
   border: 1px solid black;
 `;
+
+export const Header = styled.div`
+  font-size: 40px;
+`;
+
+export const Name = styled.p`
+  font-size: 40px;
+  text-align: center;
+  font-weight: 700;
+  color: #000000;
+`;
