@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { NavLink } from "react-router-dom";
 
 export const Chart = styled.div`
   display: flex;
@@ -20,6 +21,8 @@ export const Cell = styled.td`
 
 export const Header = styled.div`
   font-size: 40px;
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const Name = styled.p`
@@ -27,4 +30,15 @@ export const Name = styled.p`
   text-align: center;
   font-weight: 700;
   color: #000000;
+`;
+
+export const Navs = styled(NavLink)`
+  text-decoration: none;
+  padding: 4px 16px;
+  border: 1px solid green;
+
+  &.active {
+    color: grey;
+    background-color: orange;
+  }
 `;

@@ -1,22 +1,21 @@
-import { NavLink } from "react-router-dom";
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
-import { Header, Name } from "./dummy.styled";
+import { Header, Name, Navs } from "./dummy.styled";
 
 export const Tabs = ({ tabs }) => {
   return (
     <>
+      <Name>Dummy Tabs</Name>
       <Header>
-        <Name>Dummy Tabs</Name>
         <nav>
           {tabs.map((tab, index) => (
-            <NavLink key={index} to={tab.id}>
+            <Navs key={index} to={tab.id}>
               {tab.title}
-            </NavLink>
+            </Navs>
           ))}
         </nav>
       </Header>
-      <Suspense fallback={null}>
+      <Suspense fallback={<div>loading..</div>}>
         <main>
           <Outlet />
         </main>
