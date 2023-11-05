@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Tabs from "./components/tabs";
 import request from "./components/utils/request";
 import React from "react";
+import NotFound from "./components/NotFound";
 
 import { Routes, Route, Navigate } from "react-router-dom";
 
@@ -35,19 +36,24 @@ export const App = () => {
       {!isLoading && (
         <Routes>
           <Route path="/" element={<Tabs tabs={sortedOrder} />}>
-            {sortedOrder.map((tab, i) => {
+            {sortedOrder.map((tab, index) => {
               const Page = lazy(() => import(`./components/${tab.path}`));
-              if (i === 0) {
+              if (sortedOrder[0]) {
                 return (
-                  <React.Fragment key={i}>
-                    <Route index element={<Navigate to={tab.id} />} />
+                  <React.Fragment key={index}>
+                    <Route
+                      index
+                      element={
+                        <Navigate to={tab.id} replace isActive={() => true} />
+                      }
+                    />
                     <Route path={tab.id} element={<Page />} />
                   </React.Fragment>
                 );
               }
-              return <Route key={i} path={tab.id} element={<Page />} />;
+              return <Route key={index} path={tab.id} element={<Page />} />;
             })}
-            <Route path="*" element={<div>Not Found</div>} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       )}
