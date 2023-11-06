@@ -5,21 +5,13 @@ import request from "./components/utils/request";
 import React from "react";
 import NotFound from "./components/NotFound";
 
-import {
-  Routes,
-  Route,
-  Navigate,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 
 import { lazy } from "react";
 
 export const App = () => {
   const [tabs, setTabs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [shouldLoadFirstPage, setShouldLoadFirstPage] = useState(false);
-  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,51 +30,32 @@ export const App = () => {
   }, []);
 
   const sortedOrder = tabs.sort((a, b) => a.order - b.order);
+  const firstTabPath = sortedOrder.length > 0 ? sortedOrder[0].id : null;
 
   useEffect(() => {
-    if (!isLoading && sortedOrder.length > 0) {
-      setShouldLoadFirstPage(true);
+    if (firstTabPath && window.location.pathname === "/") {
+      navigate(firstTabPath, { replace: true });
     }
-  }, [isLoading, sortedOrder]);
-
-  useEffect(() => {
-    if (shouldLoadFirstPage) {
-      const { pathname } = location;
-      const firstTabPath = sortedOrder[0].id;
-
-      if (pathname === "/") {
-        navigate(firstTabPath, { replace: true });
-      }
-    }
-  }, [shouldLoadFirstPage, location, sortedOrder, navigate]);
+  }, [firstTabPath, navigate]);
 
   return (
     <div className="App">
-      <>
-        {!isLoading && sortedOrder.length && (
-          <Routes>
-            <Route path="/" element={<Tabs tabs={sortedOrder} />}>
-              {sortedOrder.map((tab, index) => {
-                const Page = lazy(() => import(`./components/${tab.path}`));
+      {!isLoading && sortedOrder.length && (
+        <Routes>
+          <Route path="/" element={<Tabs tabs={sortedOrder} />}>
+            <Route index element={<Navigate to={firstTabPath} />} />
 
-                if (shouldLoadFirstPage && index === 0) {
-                  return (
-                    <React.Fragment key={index}>
-                      <Route index element={<Navigate to={tab.id} replace />} />
-                      <Route path={tab.id} element={<Page />} />
-                    </React.Fragment>
-                  );
-                }
+            {sortedOrder.map((tab, index) => {
+              const Page = lazy(() => import(`./components/${tab.path}`));
 
-                return <Route key={index} path={tab.id} element={<Page />} />;
-              })}
+              return <Route key={index} path={tab.id} element={<Page />} />;
+            })}
 
-              <Route path="*" element={<NotFound />} />
-            </Route>
-          </Routes>
-        )}
-        {isLoading && <div>Loading...</div>}
-      </>
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      )}
+      {isLoading && <div>Loading...</div>}
     </div>
   );
 };
