@@ -5,7 +5,13 @@ import request from "./components/utils/request";
 import React from "react";
 import NotFound from "./components/NotFound";
 
-import { Routes, Route, Navigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 import { lazy } from "react";
 
@@ -13,6 +19,8 @@ export const App = () => {
   const [tabs, setTabs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [shouldLoadFirstPage, setShouldLoadFirstPage] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchTabs() {
@@ -36,6 +44,17 @@ export const App = () => {
       setShouldLoadFirstPage(true);
     }
   }, [isLoading, sortedOrder]);
+
+  useEffect(() => {
+    if (shouldLoadFirstPage) {
+      const { pathname } = location;
+      const firstTabPath = sortedOrder[0].id;
+
+      if (pathname === "/") {
+        navigate(firstTabPath, { replace: true });
+      }
+    }
+  }, [shouldLoadFirstPage, location, sortedOrder, navigate]);
 
   return (
     <div className="App">
