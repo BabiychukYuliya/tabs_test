@@ -5,7 +5,7 @@ import request from "./components/utils/request";
 import React from "react";
 import NotFound from "./components/NotFound";
 
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 
 import { lazy } from "react";
 
@@ -31,26 +31,35 @@ export const App = () => {
 
   const sortedOrder = tabs.sort((a, b) => a.order - b.order);
   const firstTabPath = sortedOrder.length > 0 ? sortedOrder[0].id : null;
-
+  const selectedTabPath = sortedOrder.length > 0 ? !sortedOrder[0].id : null;
   useEffect(() => {
-    if (firstTabPath && window.location.pathname === "/") {
-      navigate(firstTabPath, { replace: true });
+    if (firstTabPath) {
+      navigate(firstTabPath);
     }
-  }, [firstTabPath, navigate]);
+
+    if (!firstTabPath) {
+      navigate(selectedTabPath);
+    }
+  }, [tabs, firstTabPath, navigate, selectedTabPath]);
 
   return (
     <div className="App">
-      {!isLoading && sortedOrder.length && (
+      {!isLoading && sortedOrder.length > 0 && (
         <Routes>
           <Route path="/" element={<Tabs tabs={sortedOrder} />}>
-            <Route index element={<Navigate to={firstTabPath} />} />
-
+            <Route
+              index
+              element={
+                <Navigate
+                  to={selectedTabPath ? selectedTabPath : firstTabPath}
+                />
+              }
+            />
             {sortedOrder.map((tab, index) => {
               const Page = lazy(() => import(`./components/${tab.path}`));
 
               return <Route key={index} path={tab.id} element={<Page />} />;
             })}
-
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

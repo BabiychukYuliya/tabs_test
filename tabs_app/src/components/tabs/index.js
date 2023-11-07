@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
 import { Header, Name, Navs } from "./dummy.styled";
 
-export const Tabs = ({ tabs, location }) => {
+export const Tabs = ({ tabs }) => {
   return (
     <>
       <Name>Dummy Tabs</Name>
