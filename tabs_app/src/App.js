@@ -38,10 +38,10 @@ export const App = () => {
   console.log("selectedTabPath", selectedTabPath);
 
   useEffect(() => {
-    if (firstTabPath) {
+    if (tabs.length) {
       navigate(firstTabPath);
-    }
-  }, [tabs, firstTabPath, navigate]);
+    } else navigate(selectedTabPath);
+  }, [tabs, firstTabPath, selectedTabPath, navigate]);
 
   return (
     <div className="App">
