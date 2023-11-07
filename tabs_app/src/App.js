@@ -31,16 +31,17 @@ export const App = () => {
 
   const sortedOrder = tabs.sort((a, b) => a.order - b.order);
   const firstTabPath = sortedOrder.length > 0 ? sortedOrder[0].id : null;
-  const selectedTabPath = sortedOrder.length > 0 ? !sortedOrder[0].id : null;
+  const selectedTabPath =
+    sortedOrder.length > 0 ? sortedOrder[1].id || sortedOrder[2].id : null;
+
+  console.log("firstTabPath", firstTabPath);
+  console.log("selectedTabPath", selectedTabPath);
+
   useEffect(() => {
     if (firstTabPath) {
       navigate(firstTabPath);
     }
-
-    if (!firstTabPath) {
-      navigate(selectedTabPath);
-    }
-  }, [tabs, firstTabPath, navigate, selectedTabPath]);
+  }, [tabs, firstTabPath, navigate]);
 
   return (
     <div className="App">
@@ -49,11 +50,7 @@ export const App = () => {
           <Route path="/" element={<Tabs tabs={sortedOrder} />}>
             <Route
               index
-              element={
-                <Navigate
-                  to={selectedTabPath ? selectedTabPath : firstTabPath}
-                />
-              }
+              element={<Navigate to={selectedTabPath || firstTabPath} />}
             />
             {sortedOrder.map((tab, index) => {
               const Page = lazy(() => import(`./components/${tab.path}`));
