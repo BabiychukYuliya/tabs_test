@@ -36,8 +36,8 @@ export const App = () => {
   useEffect(() => {
     if (tabs.length) {
       navigate(firstTabPath);
-    } else navigate(selectedTabPath);
-  }, [tabs, firstTabPath, selectedTabPath, navigate]);
+    }
+  }, [tabs, firstTabPath, navigate]);
 
   return (
     <div className="App">
@@ -53,7 +53,7 @@ export const App = () => {
               index
               element={
                 <Navigate
-                  to={<Navigate to={tabs[0]?.id || selectedTabPath} />}
+                  to={<Navigate to={firstTabPath || selectedTabPath} />}
                 />
               }
             />
