@@ -1,15 +1,8 @@
-import { Suspense, useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Suspense } from "react";
+import { Outlet } from "react-router-dom";
 import { Header, Name, Navs } from "./dummy.styled";
 
-export const Tabs = ({ tabs, selectedTabPath }) => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (selectedTabPath) {
-      navigate(`/${selectedTabPath}`);
-    }
-  }, [selectedTabPath, navigate]);
+export const Tabs = ({ tabs }) => {
   return (
     <>
       <Name>Dummy Tabs</Name>

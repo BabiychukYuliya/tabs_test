@@ -37,7 +37,7 @@ export const App = () => {
     if (tabs.length) {
       navigate(firstTabPath);
     }
-  }, [tabs, firstTabPath, navigate]);
+  }, [firstTabPath]);
 
   return (
     <div className="App">
@@ -53,7 +53,7 @@ export const App = () => {
               index
               element={
                 <Navigate
-                  to={<Navigate to={firstTabPath || selectedTabPath} />}
+                  to={<Navigate to={selectedTabPath || tabs[0]?.id} />}
                 />
               }
             />
