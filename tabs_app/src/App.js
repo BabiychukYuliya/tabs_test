@@ -5,13 +5,14 @@ import request from "./components/utils/request";
 import React from "react";
 import NotFound from "./components/NotFound";
 
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 
 import { lazy } from "react";
 
 export const App = () => {
   const [tabs, setTabs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedTabPath, setSelectedTabPath] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,11 +32,6 @@ export const App = () => {
 
   const sortedOrder = tabs.sort((a, b) => a.order - b.order);
   const firstTabPath = sortedOrder.length > 0 ? sortedOrder[0].id : null;
-  const selectedTabPath =
-    sortedOrder.length > 0 ? sortedOrder[1].id || sortedOrder[2].id : null;
-
-  console.log("firstTabPath", firstTabPath);
-  console.log("selectedTabPath", selectedTabPath);
 
   useEffect(() => {
     if (tabs.length) {
@@ -47,11 +43,21 @@ export const App = () => {
     <div className="App">
       {!isLoading && sortedOrder.length > 0 && (
         <Routes>
-          <Route path="/" element={<Tabs tabs={sortedOrder} />}>
+          <Route
+            path="/"
+            element={
+              <Tabs tabs={sortedOrder} selectedTabPath={selectedTabPath} />
+            }
+          >
             <Route
               index
-              element={<Navigate to={selectedTabPath || firstTabPath} />}
+              element={
+                <Navigate
+                  to={<Navigate to={tabs[0]?.id || selectedTabPath} />}
+                />
+              }
             />
+            ;
             {sortedOrder.map((tab, index) => {
               const Page = lazy(() => import(`./components/${tab.path}`));
 
